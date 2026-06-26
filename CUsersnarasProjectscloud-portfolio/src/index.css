@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-emerald-neon: #10b981;
+  --color-emerald-glow: #34d399;
+  --color-emerald-dim: #059669;
+  --color-surface: #0a0f0d;
+  --color-surface-raised: #111916;
+  --color-surface-glass: rgba(17, 25, 22, 0.65);
+  --color-border-glass: rgba(16, 185, 129, 0.15);
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-gray-100 font-sans antialiased overflow-x-hidden;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.12), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(16, 185, 129, 0.06), transparent);
+  }
+
+  ::selection {
+    @apply bg-emerald-neon/30 text-white;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-surface-glass backdrop-blur-xl border border-border-glass;
+  }
+
+  .glass-strong {
+    @apply bg-surface-raised/80 backdrop-blur-2xl border border-emerald-neon/20;
+  }
+
+  .glow-emerald {
+    box-shadow:
+      0 0 20px rgba(16, 185, 129, 0.25),
+      0 0 60px rgba(16, 185, 129, 0.08);
+  }
+
+  .glow-emerald-sm {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+  }
+
+  .text-gradient-emerald {
+    @apply bg-gradient-to-r from-emerald-glow via-emerald-neon to-emerald-dim bg-clip-text text-transparent;
+  }
+
+  .grid-neon {
+    background-image:
+      linear-gradient(rgba(16, 185, 129, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
