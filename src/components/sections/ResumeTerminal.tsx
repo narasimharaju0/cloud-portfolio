@@ -57,11 +57,14 @@ export function ResumeTerminal() {
   const [input, setInput] = useState('')
   const [history, setHistory] = useState<string[]>([])
   const [historyIndex, setHistoryIndex] = useState(-1)
-  const bottomRef = useRef<HTMLDivElement>(null)
+  
+  const terminalRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    }
   }, [lines])
 
   const executeCommand = (cmd: string) => {
@@ -110,6 +113,7 @@ export function ResumeTerminal() {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      e.preventDefault() 
       executeCommand(input)
       if (input.trim()) {
         setHistory((prev) => [...prev, input])
@@ -191,16 +195,18 @@ export function ResumeTerminal() {
             </div>
 
             <a
-              href={LINKS.resumeDownload}
-              download
+              href="/resume/resume.pdf"
+              download="resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-md bg-emerald-neon/15 text-emerald-glow border border-emerald-neon/30 hover:bg-emerald-neon/25 transition-all glow-emerald-sm"
             >
               <Download size={14} />
-              Download PDF Resume
+              Download Resume
             </a>
           </div>
 
-          <div className="p-4 h-[400px] overflow-y-auto font-mono text-sm bg-[#0d1110]">
+          <div ref={terminalRef} className="p-4 h-[400px] overflow-y-auto font-mono text-sm bg-[#0d1110]">
             {lines.map((line, i) => (
               <div
                 key={i}
@@ -230,7 +236,6 @@ export function ResumeTerminal() {
                 aria-label="Terminal command input"
               />
             </div>
-            <div ref={bottomRef} />
           </div>
         </motion.div>
       </div>

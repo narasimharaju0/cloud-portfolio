@@ -3,7 +3,7 @@ import { ArrowDown, Download } from 'lucide-react'
 import { GlowButton } from '../ui/GlowButton'
 import { SocialLinks } from '../ui/SocialLinks'
 import { TopologyMap } from '../ui/TopologyMap'
-import { LINKS } from '../../data/constants'
+
 
 export function Hero() {
   const scrollToContact = () => {
@@ -59,10 +59,17 @@ export function Hero() {
                 Initiate Contact
                 <ArrowDown size={16} />
               </GlowButton>
-              <GlowButton variant="secondary" href={LINKS.resumeDownload}>
-                <Download size={16} />
-                Download ATS Resume
-              </GlowButton>
+              
+              <a
+                href="/resume/resume.pdf"
+                download="resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium border border-gray-700 hover:border-emerald-neon/50 hover:text-emerald-glow transition-all"
+              >
+                <Download size={20} />
+                Download Resume
+              </a>
             </motion.div>
 
             <motion.div

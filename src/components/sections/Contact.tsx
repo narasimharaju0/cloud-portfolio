@@ -6,13 +6,38 @@ import { LINKS, PROFILE, EMAIL } from '../../data/constants'
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', message: '' })
 
-  const handleSubmit = (e: FormEvent) => {
+  
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnjkozvy'
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 4000)
-    setForm({ name: '', email: '', message: '' })
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+        setForm({ name: '', email: '', message: '' })
+        setTimeout(() => setSubmitted(false), 5000)
+      } else {
+        alert("Transmission failed. Please try again or use the email link below.")
+      }
+    } catch (error) {
+      alert("Network error. Please use the direct email link below.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const inputClasses =
@@ -61,12 +86,14 @@ export function Contact() {
                   </label>
                   <input
                     id="name"
+                    name="name"
                     type="text"
                     required
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     className={inputClasses}
                     placeholder="Your full name"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -76,12 +103,14 @@ export function Contact() {
                   </label>
                   <input
                     id="email"
+                    name="email"
                     type="email"
                     required
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className={inputClasses}
                     placeholder="you@company.com"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -91,23 +120,30 @@ export function Contact() {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     required
                     rows={5}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className={`${inputClasses} resize-none`}
                     placeholder="Describe your infrastructure challenge or opportunity..."
+                    disabled={isSubmitting}
                   />
                 </div>
 
                 <motion.button
                   type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-emerald-neon/20 text-emerald-glow border border-emerald-neon/40 font-medium hover:bg-emerald-neon/30 transition-all glow-emerald-sm"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                  className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg border font-medium transition-all ${
+                    isSubmitting 
+                    ? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'
+                    : 'bg-emerald-neon/20 text-emerald-glow border-emerald-neon/40 hover:bg-emerald-neon/30 glow-emerald-sm'
+                  }`}
                 >
-                  <Send size={18} />
-                  Transmit Message
+                  <Send size={18} className={isSubmitting ? 'animate-pulse' : ''} />
+                  {isSubmitting ? 'Transmitting...' : 'Transmit Message'}
                 </motion.button>
               </form>
             )}
