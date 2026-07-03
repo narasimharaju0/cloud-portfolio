@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import { Send, CheckCircle } from 'lucide-react'
 import { GlassCard } from '../ui/GlassCard'
-import { LINKS, PROFILE, EMAIL } from '../../data/constants'
+import { LINKS, PROFILE, EMAIL, PHONE } from '../../data/constants'
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false)
@@ -163,6 +163,12 @@ export function Contact() {
               className="hover:text-emerald-glow transition-colors"
             >
               {EMAIL}
+            </a>
+            <a
+              href={LINKS.phone}
+              className="hover:text-emerald-glow transition-colors"
+            >
+              {PHONE}
             </a>
           </div>
         </div>
