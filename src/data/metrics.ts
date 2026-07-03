@@ -1,4 +1,4 @@
-import { Activity, Gauge, Shield, Timer } from 'lucide-react'
+import { Activity, Gauge, Layers, Shield } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 export interface Metric {
@@ -32,10 +32,10 @@ export const metrics: Metric[] = [
     trend: 'CI/CD Stable',
   },
   {
-    id: 'experience',
-    value: '1.5 Yrs',
-    label: 'Professional Multicloud Experience (Cognizant Technology Solutions)',
-    icon: Timer,
-    trend: 'AWS & Azure',
+    id: 'engineering',
+    value: 'Cloud-Native Engineering',
+    label: 'Driving operational efficiency and automated scaling in production environments.',
+    icon: Layers,
+    trend: 'Production Focus',
   },
 ]

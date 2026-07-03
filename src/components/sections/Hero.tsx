@@ -32,11 +32,12 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight"
             >
-              Hi, I&apos;m{' '}
-              <span className="text-gradient-emerald">Narasimha Raju</span>.
+              Architecting{' '}
+              <span className="text-gradient-emerald">Resilient Cloud Infrastructure</span>.
               <br />
-              <span className="text-gradient-emerald">Multicloud Engineer</span> & DevOps
-              Specialist.
+              <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-200 mt-2 inline-block">
+                <span className="text-gradient-emerald">Multicloud Engineer</span> & DevOps Specialist
+              </span>
             </motion.h1>
 
             <motion.p
